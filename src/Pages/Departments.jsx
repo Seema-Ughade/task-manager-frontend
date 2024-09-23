@@ -18,7 +18,7 @@ const Departments = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/departments');
+        const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/departments');
         if (Array.isArray(response.data)) {
           setDepartments(response.data);
         } else {
@@ -58,7 +58,7 @@ const Departments = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm('Are you sure you want to delete this department?')) {
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/departments/${id}`);
+        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/departments/${id}`);
         setDepartments(departments.filter(department => department._id !== id));
       } catch (error) {
         console.error('Error deleting department:', error);
@@ -87,14 +87,14 @@ const Departments = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`http://127.0.0.1:5000/api/departments/${editId}`, newDepartment);
+        await axios.put(`https://task-manager-backend-btas.onrender.com/api/departments/${editId}`, newDepartment);
         setDepartments(
           departments.map((department) =>
             department._id === editId ? { ...department, ...newDepartment } : department
           )
         );
       } else {
-        const response = await axios.post('http://127.0.0.1:5000/api/departments', newDepartment);
+        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/departments', newDepartment);
         setDepartments([...departments, response.data]);
       }
 
