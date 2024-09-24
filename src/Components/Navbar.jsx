@@ -45,9 +45,9 @@ const Navbar = ({ collapsed, setCollapsed }) => {
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-md sticky top-0 z-50">
       {/* Toggle Button */}
-      <Button type="link" onClick={toggleCollapsed}>
+      {/* <Button type="link" onClick={toggleCollapsed}>
         {collapsed ? <MenuOutlined style={{ fontSize: '1.5rem' }} /> : <CloseOutlined style={{ fontSize: '1.5rem' }} />}
-      </Button>
+      </Button> */}
 
       {/* Right Section: Notifications, Language, User Profile */}
       <div className="flex items-center space-x-4 ml-auto">
