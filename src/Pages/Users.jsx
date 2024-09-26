@@ -22,7 +22,10 @@ const Users = () => {
   const fetchUsers = async () => {
     try {
       const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
-      setUsers(response.data);
+      setUsers(response.data.map(user => ({
+        ...user,
+        password: undefined, // Exclude password from user data
+      })));
     } catch (error) {
       message.error('Failed to fetch users');
     }
@@ -57,30 +60,39 @@ const Users = () => {
     formData.append('name', values.name);
     formData.append('email', values.email);
     formData.append('phone', values.phone);
-    formData.append('password', values.password);
-    formData.append('confirmPassword', values.confirmPassword); // Include confirmPassword
+    if (!editingUser) { // Only append password if creating a new user
+      formData.append('password', values.password);
+    }
     formData.append('role', values.role);
     formData.append('project', values.project);
     formData.append('salary', values.salary);
-    formData.append('isActive', values.isActive); // Ensure this is set properly
+    formData.append('isActive', values.isActive);
+    
     if (fileList.length > 0) { // Check if there is a file to upload
-        formData.append('profilePicture', fileList[0].originFileObj); // Use the original file object
+      formData.append('profilePicture', fileList[0].originFileObj); // Use the original file object
     }
 
     try {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/users', formData, {
+      const response = editingUser
+        ? await axios.put(`https://task-manager-backend-btas.onrender.com/api/users/${editingUser._id}`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
+              'Content-Type': 'multipart/form-data',
             },
-        });
-        message.success(editingUser ? 'User updated successfully' : 'User created successfully');
-        fetchUsers(); // Refresh the user list
-        handleCancel(); // Close the modal
+          })
+        : await axios.post('https://task-manager-backend-btas.onrender.com/api/users', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+      message.success(editingUser ? 'User updated successfully' : 'User created successfully');
+      fetchUsers(); // Refresh the user list
+      handleCancel(); // Close the modal
     } catch (error) {
-        console.error('Error creating/updating user:', error.response.data);
-        message.error('Failed to save user');
+      console.error('Error creating/updating user:', error.response.data);
+      message.error('Failed to save user');
     }
-};
+  };
+
   const handleCancel = () => {
     setVisible(false);
     setEditingUser(null);
@@ -131,7 +143,7 @@ const Users = () => {
                 <img
                   alt="avatar"
                   width="50"
-                  src={`https://ui-avatars.com/api/?name=${user.name}&size=64&rounded=true&color=fff&background=42c9af`}
+                  src={user.profilePicture || `https://ui-avatars.com/api/?name=${user.name}&size=64&rounded=true&color=fff&background=42c9af`}
                   className="rounded-full"
                 />
                 <label className="custom-switch pl-0" title={user.isActive ? "Active" : "Inactive"}>
@@ -145,8 +157,8 @@ const Users = () => {
                 </label>
               </div>
               <div className="flex-1">
-                <div className="flex  justify-between">
-                  <h4 className="font-semibold">{user.name}</h4>
+                <div className="flex justify-between">
+                  <h4 className="font-semibold bg-red-500">{user.name}</h4>
                   <Dropdown overlay={
                     <Menu>
                       <Menu.Item onClick={() => showModal(user)}>Edit</Menu.Item>
@@ -164,10 +176,10 @@ const Users = () => {
             </div>
             <div className="flex p-4">
               <div className="mr-3">
-                <span className="bg-blue-500 text-white px-2 py-1 rounded">{user.projects}</span> Projects
+                <span className="bg-blue-500 text-white px-2 py-1 rounded">{user.project}</span> Project
               </div>
               <div>
-                <span className="bg-gray-800 text-white px-2 py-1 rounded">{user.tasks}</span> Tasks Active
+                <span className="bg-gray-800 text-white px-2 py-1 rounded">{user.tasks || 0}</span> Tasks Active
               </div>
             </div>
           </div>
@@ -208,22 +220,22 @@ const Users = () => {
           <Form.Item name="salary" label="Salary" rules={[{ required: true, message: 'Please input the salary!' }]}>
             <Input type="number" />
           </Form.Item>
-          <Form.Item label="Profile Picture">
-            <Upload 
-              beforeUpload={() => false} 
-              fileList={fileList} 
-              onChange={handleUploadChange}
-              accept=".jpg,.jpeg,.png,.gif"
-            >
-              <Button>Choose Image</Button>
-            </Upload>
+          <Form.Item name="isActive" label="Active" valuePropName="checked">
+            <Switch />
           </Form.Item>
-          <Form.Item name="isActive" label="Active Status" valuePropName="checked">
-            <Switch defaultChecked={editingUser ? editingUser.isActive : true} />
+          <Form.Item label="Profile Picture">
+            <Upload
+              listType="picture"
+              beforeUpload={() => false} // Prevent automatic upload
+              onChange={handleUploadChange}
+              fileList={fileList}
+            >
+              <Button>Upload</Button>
+            </Upload>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              {editingUser ? "Update" : "Create"}
+              {editingUser ? "Update" : "Create"} User
             </Button>
           </Form.Item>
         </Form>

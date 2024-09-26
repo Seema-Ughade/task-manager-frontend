@@ -4,6 +4,7 @@ import { Modal, Button, Form, Input, Select, message, Card, Progress, Avatar, Pa
 import { EllipsisOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ReactQuill from "react-quill"; // Import ReactQuill for the description field
 import "react-quill/dist/quill.snow.css"; // Import styles for ReactQuill
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
 const { Option } = Select;
 
@@ -16,6 +17,7 @@ const Projects = () => {
   const [form] = Form.useForm();
   const [currentPage, setCurrentPage] = useState(1); // Track pagination page
   const [pageSize] = useState(6); // Set the page size (6 projects per page)
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   // Fetch projects and users from the backend
   useEffect(() => {
@@ -109,15 +111,18 @@ const Projects = () => {
   // Paginate the projects to display
   const paginatedProjects = projects.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
+
+  const handleProjectClick = () => {
+    navigate("/simpletab"); // Navigate to /simpletab
+  };
+
   return (
     <div className="container py-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Projects</h1>
-        <Button type="primary" onClick={() => showModal()}>
-          Add Project
-        </Button>
-      </div>
-      
+      <h1 className="text-2xl font-bold mb-4 text-gray-800">Projects</h1>
+      <Button type="primary" className="mb-4" onClick={() => showModal()}>
+        New Project
+      </Button>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {paginatedProjects.length > 0 ? (
           paginatedProjects.map((project) => (
@@ -127,7 +132,9 @@ const Projects = () => {
               title={
                 <div className="flex justify-between items-center">
                   <span>{project.prefix}</span>
-                  <span className="text-primary">{project.name}</span>
+                  <span className="text-primary cursor-pointer" onClick={handleProjectClick}>
+                    {project.name}
+                  </span>
                 </div>
               }
               actions={[
@@ -255,4 +262,4 @@ const Projects = () => {
   );
 };
 
-export default Projects
+export default Projects;

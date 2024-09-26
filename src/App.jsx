@@ -23,6 +23,10 @@ import Team from "./Pages/Team";
 import Trash from "./Pages/Trash";
 import Login from "./Login/login";
 
+
+//subpages
+import SimpleTabs from "./Components/Subpage/SimpleTabs";
+
 const App = () => {
   return (
     <Router className="bg-black">
@@ -53,6 +57,16 @@ const App = () => {
               <Route path="/events" element={<Events />} />
               <Route path="/team" element={<Team />} />
               <Route path="/trashed" element={<Trash />} />
+
+              <Route path="/simpletab" element={<SimpleTabs />} />
+
+
+
+
+
+
+
+              
             </Routes>
           </div>
         </div>

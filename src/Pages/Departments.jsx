@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill's styles
 import axios from 'axios';
+import '../Components/css/Shimmer.css'; // For shimmer effect
+
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
@@ -12,12 +14,16 @@ const Departments = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(null);
+  const [loading, setLoading] = useState(true); // For shimmer effect
+
   const itemsPerPage = 12;
 
   // Fetch departments from the backend
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
+        setLoading(true); // Start shimmer effect
+
         const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/departments');
         if (Array.isArray(response.data)) {
           setDepartments(response.data);
@@ -26,6 +32,8 @@ const Departments = () => {
         }
       } catch (error) {
         console.error('Error fetching departments:', error);
+      } finally {
+        setLoading(false); // End shimmer effect
       }
     };
     fetchDepartments();
@@ -107,6 +115,7 @@ const Departments = () => {
   };
 
   return (
+    <>
     <div className="p-5">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">Departments</h1>
@@ -124,6 +133,13 @@ const Departments = () => {
           className="p-2 border border-gray-300 rounded w-[18%] sm:w-[40%] md:w-[25%] lg:w-[18%]"
         />
       </div>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
+            <div key={index} className="shimmer-card rounded-md h-36"></div>
+          ))}
+        </div>
+      ) : (
 
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentDepartments.map((department, index) => (
@@ -160,8 +176,8 @@ const Departments = () => {
           </div>
         ))}
       </div>
-
-      <div className="mt-4 flex justify-center">
+      )}
+<div className="mt-4 flex justify-end w-full">
         {currentPage > 1 && (
           <button onClick={() => handlePageChange(currentPage - 1)} className="px-3 py-2 mx-1 border rounded border-gray-300 hover:bg-gray-100">
             Previous
@@ -237,6 +253,7 @@ const Departments = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

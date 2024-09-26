@@ -112,42 +112,129 @@ import {
 } from "react-icons/md";
 import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { Layout, Menu, Button } from "antd";
+import { Layout, Menu, Button, Input } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import mainlogo from "../assets/mainlogo.png";
 
 const { Sider } = Layout;
 
 const linkData = [
-  { key: "dashboard", icon: <MdDashboard style={{ color: "#1890ff" }} />, label: "Dashboard", to: "/dashboard" },
-  { key: "departments", icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, label: "Departments", to: "/departments" },
-  { key: "clients", icon: <FaUsers style={{ color: "#52c41a" }} />, label: "Clients", to: "/clients" },
-  { key: "projects", icon: <FaTasks style={{ color: "#13c2c2" }} />, label: "Projects", to: "/projects" },
+  { 
+    key: "dashboard", 
+    icon: <MdDashboard style={{ color: "#1890ff" }} />, 
+    label: "Dashboard", 
+    to: "/dashboard", 
+    permission: "Manage Status" 
+  },
+  { 
+    key: "departments", 
+    icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, 
+    label: "Departments", 
+    to: "/departments", 
+    permission: "Manage Department" 
+  },
+  { 
+    key: "clients", 
+    icon: <FaUsers style={{ color: "#52c41a" }} />, 
+    label: "Clients", 
+    to: "/clients", 
+    permission: "Manage Clients" 
+  },
+  { 
+    key: "projects", 
+    icon: <FaTasks style={{ color: "#13c2c2" }} />, 
+    label: "Projects", 
+    to: "/projects", 
+    permission: "Manage Projects" 
+  },
   {
     key: "tasks",
     icon: <FaTasks style={{ color: "#eb2f96" }} />,
     label: "Tasks",
     to: "/tasks",
+    permission: "Manage Tasks",
     children: [
-      { key: "completed", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Completed", to: "/completed/completed" },
-      { key: "in-progress", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "In Progress", to: "/in-progress/in-progress" },
-      { key: "todo", icon: <MdOutlinePendingActions style={{ color: "#f5222d" }} />, label: "To Do", to: "/todo/todo" },
+      { key: "completed", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Completed", to: "/completed/completed", permission: "Manage Tasks" },
+      { key: "in-progress", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "In Progress", to: "/in-progress/in-progress", permission: "Manage Tasks" },
+      { key: "todo", icon: <MdOutlinePendingActions style={{ color: "#f5222d" }} />, label: "To Do", to: "/todo/todo", permission: "Manage Tasks" },
     ],
   },
-  { key: "calendar", icon: <MdOutlinePendingActions style={{ color: "#722ed1" }} />, label: "Calendar", to: "/calendar" },
-  { key: "reports", icon: <MdTaskAlt style={{ color: "#eb2f96" }} />, label: "Reports", to: "/reports" },
-  { key: "users", icon: <FaUsers style={{ color: "#13c2c2" }} />, label: "Users", to: "/users" },
-  { key: "archived-users", icon: <FaTrashAlt style={{ color: "#f5222d" }} />, label: "Archived Users", to: "/archived-users" },
-  { key: "roles", icon: <MdSettings style={{ color: "#1890ff" }} />, label: "Roles", to: "/roles" },
-  { key: "sales", icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, label: "Sales", to: "/sales" },
-  { key: "activity-logs", icon: <MdSettings style={{ color: "#722ed1" }} />, label: "Activity Logs", to: "/activity-logs" },
-  { key: "events", icon: <MdOutlinePendingActions style={{ color: "#52c41a" }} />, label: "Events", to: "/events" },
-  { key: "team", icon: <FaUsers style={{ color: "#fa541c" }} />, label: "Team", to: "/team" },
-  { key: "trashed", icon: <FaTrashAlt style={{ color: "#f5222d" }} />, label: "Trash", to: "/trashed" },
+  { 
+    key: "calendar", 
+    icon: <MdOutlinePendingActions style={{ color: "#722ed1" }} />, 
+    label: "Calendar", 
+    to: "/calendar", 
+    permission: "Manage Calendar View" 
+  },
+  { 
+    key: "reports", 
+    icon: <MdTaskAlt style={{ color: "#eb2f96" }} />, 
+    label: "Reports", 
+    to: "/reports", 
+    permission: "Manage Reports" 
+  },
+  { 
+    key: "users", 
+    icon: <FaUsers style={{ color: "#13c2c2" }} />, 
+    label: "Users", 
+    to: "/users", 
+    permission: "Manage Users" 
+  },
+  { 
+    key: "archived-users", 
+    icon: <FaTrashAlt style={{ color: "#f5222d" }} />, 
+    label: "Archived Users", 
+    to: "/archived-users", 
+    permission: "Archived Users" 
+  },
+  { 
+    key: "roles", 
+    icon: <MdSettings style={{ color: "#1890ff" }} />, 
+    label: "Roles", 
+    to: "/roles", 
+    permission: "Manage Roles" 
+  },
+  { 
+    key: "sales", 
+    icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, 
+    label: "Sales", 
+    to: "/sales", 
+    permission: "Manage Invoices" 
+  },
+  { 
+    key: "activity-logs", 
+    icon: <MdSettings style={{ color: "#722ed1" }} />, 
+    label: "Activity Logs", 
+    to: "/activity-logs", 
+    permission: "Manage Activity Log" 
+  },
+  { 
+    key: "events", 
+    icon: <MdOutlinePendingActions style={{ color: "#52c41a" }} />, 
+    label: "Events", 
+    to: "/events", 
+    permission: "Manage Events" 
+  },
+  { 
+    key: "team", 
+    icon: <FaUsers style={{ color: "#fa541c" }} />, 
+    label: "Team", 
+    to: "/team", 
+    permission: "Manage Users" 
+  },
+  { 
+    key: "trashed", 
+    icon: <FaTrashAlt style={{ color: "#f5222d" }} />, 
+    label: "Trash", 
+    to: "/trashed", 
+    permission: "Manage Trash" 
+  },
 ];
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('');
+
   const navigate = useNavigate();
 
   const toggleCollapsed = () => {
@@ -158,15 +245,13 @@ const Sidebar = () => {
     <Layout>
       {/* Toggle Button on the outer left side */}
       <Button
-        type="primary"
         onClick={toggleCollapsed}
         style={{
           position: "fixed",
           top: 16,
           left: collapsed ? 90 : 260,
           zIndex: 1000,
-          backgroundColor: "#1890ff",
-          borderColor: "#1890ff",
+          color : 'gray'
         }}
         icon={collapsed ? <MenuOutlined /> : <MenuOutlined />}
       />
@@ -185,6 +270,20 @@ const Sidebar = () => {
           <img src={mainlogo} className="w-[60%] h-auto" alt="Logo" />
           {!collapsed && <p className="text-xl font-semibold">Arrc Technology</p>}
         </div>
+<input
+  type="text"
+  placeholder="Search..."
+  value={searchTerm}
+  onChange={e => setSearchTerm(e.target.value)}
+  style={{
+    padding: "10px",      // Add padding for better look
+    border: "1px solid #ccc", // Add border for visual distinction
+    borderRadius: "4px", // Rounded corners
+    width: "100%",       // Full width of the container
+    boxSizing: "border-box" // Ensure padding and border are included in width
+  }}
+/>
+      
 
         <Menu
           className="mt-5"
