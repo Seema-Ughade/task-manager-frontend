@@ -23,6 +23,9 @@ import Team from "./Pages/Team";
 import Trash from "./Pages/Trash";
 import Login from "./Login/login";
 
+import Status from "./Components/Subpage/Tasks/Status";
+import SubTasks from "../src/Components/Subpage/Tasks/SubTasks";
+
 
 //subpages
 import SimpleTabs from "./Components/Subpage/SimpleTabs";
@@ -47,6 +50,13 @@ const App = () => {
               <Route path="/clients" element={<Clients />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/tasks" element={<Tasks />} />
+
+              <Route path="/tasks/status" element={<Status />} />
+              <Route path="/tasks/tasks" element={<SubTasks />} />
+
+
+
+
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/reports" element={<Reports />} />
               <Route path="/users" element={<Users />} />

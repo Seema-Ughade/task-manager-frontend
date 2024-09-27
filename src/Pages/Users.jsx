@@ -67,7 +67,10 @@ const Users = () => {
     formData.append('project', values.project);
     formData.append('salary', values.salary);
     formData.append('isActive', values.isActive);
-    
+
+    // Map isActive to status
+    formData.append('status', values.isActive ? 'active' : 'inactive'); 
+      
     if (fileList.length > 0) { // Check if there is a file to upload
       formData.append('profilePicture', fileList[0].originFileObj); // Use the original file object
     }

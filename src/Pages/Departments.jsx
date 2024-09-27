@@ -241,11 +241,12 @@ const Departments = () => {
                 />
               </div>
               <div className="flex justify-between">
-                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
-                  {isEditing ? 'Update Department' : 'Add Department'}
-                </button>
+
                 <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 border border-gray-300 rounded">
                   Cancel
+                </button>
+                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded">
+                  {isEditing ? 'Update Department' : 'Add Department'}
                 </button>
               </div>
             </form>

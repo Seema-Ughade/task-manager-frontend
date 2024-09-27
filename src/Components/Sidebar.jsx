@@ -154,9 +154,9 @@ const linkData = [
     to: "/tasks",
     permission: "Manage Tasks",
     children: [
-      { key: "completed", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Completed", to: "/completed/completed", permission: "Manage Tasks" },
-      { key: "in-progress", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "In Progress", to: "/in-progress/in-progress", permission: "Manage Tasks" },
-      { key: "todo", icon: <MdOutlinePendingActions style={{ color: "#f5222d" }} />, label: "To Do", to: "/todo/todo", permission: "Manage Tasks" },
+      { key: "tasks", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tasks", to: "/tasks/tasks", permission: "Manage Tasks" },
+      { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Status", to: "/tasks/status", permission: "Manage Tasks" },
+      { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Task list ", to: "/tasks", permission: "Manage Tasks" },
     ],
   },
   { 
@@ -266,27 +266,18 @@ const Sidebar = () => {
           borderRight: "1px solid #f0f0f0", // Optional border for a clean look
         }}
       >
-        <div className="flex flex-col justify-center items-center h-22">
+        {/* <div className="flex flex-col justify-center items-center h-28">
           <img src={mainlogo} className="w-[60%] h-auto" alt="Logo" />
           {!collapsed && <p className="text-xl font-semibold">Arrc Technology</p>}
-        </div>
-<input
-  type="text"
-  placeholder="Search..."
-  value={searchTerm}
-  onChange={e => setSearchTerm(e.target.value)}
-  style={{
-    padding: "10px",      // Add padding for better look
-    border: "1px solid #ccc", // Add border for visual distinction
-    borderRadius: "4px", // Rounded corners
-    width: "100%",       // Full width of the container
-    boxSizing: "border-box" // Ensure padding and border are included in width
-  }}
-/>
+        </div> */}
+
+<div className={`flex flex-col justify-center items-center ${collapsed ? 'h-16' : 'h-28'} transition-all duration-300`}>
+      <img src={mainlogo} className="w-[60%] mt-2 h-auto" alt="Logo" />
+    </div>
       
 
         <Menu
-          className="mt-5"
+          className=""
           theme="light"
           mode="inline"
           defaultSelectedKeys={["dashboard"]}
