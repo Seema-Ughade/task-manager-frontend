@@ -11,7 +11,7 @@
 //   const [error, setError] = useState('');
 //   const [viewType, setViewType] = useState('grid');
 //   const [isModalVisible, setIsModalVisible] = useState(false); // State for task assignment modal
-//   const [taskData, setTaskData] = useState({
+//   const [taskDataNew, settaskDataNew] = useState({
 //     title: '',
 //     description: '',
 //     assignedTo: '',
@@ -59,13 +59,13 @@
 
 //   const handleInputChange = (e) => {
 //     const { name, value } = e.target;
-//     setTaskData((prevData) => ({ ...prevData, [name]: value }));
+//     settaskDataNew((prevData) => ({ ...prevData, [name]: value }));
 //   };
 
 //   const handleAddTask = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskData);
+//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskDataNew);
 //       setTasks((prevTasks) => [...prevTasks, response.data]);
 //       handleCancel(); // Close the modal after adding task
 //     } catch (error) {
@@ -93,7 +93,7 @@
 //   };
 
 //   const handleReset = () => {
-//     setTaskData({
+//     settaskDataNew({
 //       title: '',
 //       description: '',
 //       assignedTo: '',
@@ -138,7 +138,7 @@
 //         <form onSubmit={handleAddTask} className="grid grid-cols-1 md:grid-cols-3 gap-4">
 //           <div>
 //             <label className="block mb-1" htmlFor="assignedTo">Assign To</label>
-//             <select name="assignedTo" value={taskData.assignedTo} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+//             <select name="assignedTo" value={taskDataNew.assignedTo} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
 //               <option value="">Select User</option>
 //               {users.map(user => (
 //                 <option key={user._id} value={user._id}>
@@ -149,7 +149,7 @@
 //           </div>
 //           <div>
 //             <label className="block mb-1" htmlFor="projectId">Project</label>
-//             <select name="projectId" value={taskData.projectId} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+//             <select name="projectId" value={taskDataNew.projectId} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
 //               <option value="">Select Project</option>
 //               {projects.map(project => (
 //                 <option key={project._id} value={project._id}>
@@ -160,11 +160,11 @@
 //           </div>
 //           <div>
 //             <label className="block mb-1" htmlFor="dueDate">Due Date</label>
-//             <input type="date" name="dueDate" value={taskData.dueDate} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
+//             <input type="date" name="dueDate" value={taskDataNew.dueDate} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
 //           </div>
 //           <div>
 //             <label className="block mb-1" htmlFor="status">Status</label>
-//             <select name="status" value={taskData.status} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+//             <select name="status" value={taskDataNew.status} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
 //               <option value="pending">Pending</option>
 //               <option value="completed">Completed</option>
 //               <option value="in-progress">In Progress</option>
@@ -172,11 +172,11 @@
 //           </div>
 //           <div>
 //             <label className="block mb-1" htmlFor="pageSize">Page Size</label>
-//             <input type="number" name="pageSize" value={taskData.pageSize} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
+//             <input type="number" name="pageSize" value={taskDataNew.pageSize} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
 //           </div>
 //           <div>
 //             <label className="block mb-1" htmlFor="sortBy">Sort By</label>
-//             <select name="sortBy" value={taskData.sortBy} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+//             <select name="sortBy" value={taskDataNew.sortBy} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
 //               <option value="title">Title</option>
 //               <option value="dueDate">Due Date</option>
 //               <option value="status">Status</option>
@@ -239,7 +239,7 @@ const SubTasks = () => {
   const [viewType, setViewType] = useState('grid');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [taskData, setTaskData] = useState({
+  const [taskDataNew, settaskDataNew] = useState({
     title: '',
     description: '',
     assignedTo: '',
@@ -290,13 +290,13 @@ const SubTasks = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTaskData((prevData) => ({ ...prevData, [name]: value }));
+    settaskDataNew((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskData);
+      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskDataNew);
       setTasks((prevTasks) => [...prevTasks, response.data]);
       notification.success({ message: 'Task added successfully!' });
       handleCancel(); // Close modal and reset form
@@ -329,7 +329,7 @@ const SubTasks = () => {
   };
 
   const handleReset = () => {
-    setTaskData({
+    settaskDataNew({
       title: '',
       description: '',
       assignedTo: '',
@@ -364,11 +364,11 @@ const SubTasks = () => {
         <form onSubmit={handleAddTask} className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block mb-1" htmlFor="title">Title</label>
-            <input type="text" name="title" value={taskData.title} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" required />
+            <input type="text" name="title" value={taskDataNew.title} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" required />
           </div>
           <div>
             <label className="block mb-1" htmlFor="projectId">Project</label>
-            <select name="projectId" value={taskData.projectId} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+            <select name="projectId" value={taskDataNew.projectId} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
               <option value="">Select Project</option>
               {projects.map(project => (
                 <option key={project._id} value={project._id}>{project.name}</option>
@@ -377,7 +377,7 @@ const SubTasks = () => {
           </div>
           <div>
             <label className="block mb-1" htmlFor="priority">Priority</label>
-            <select name="priority" value={taskData.priority} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+            <select name="priority" value={taskDataNew.priority} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
@@ -385,15 +385,15 @@ const SubTasks = () => {
           </div>
           <div>
             <label className="block mb-1" htmlFor="dueDate">Due Date</label>
-            <input type="date" name="dueDate" value={taskData.dueDate} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
+            <input type="date" name="dueDate" value={taskDataNew.dueDate} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
           </div>
           <div>
             <label className="block mb-1" htmlFor="estimateTime">Estimate Time (hours)</label>
-            <input type="number" name="estimateTime" value={taskData.estimateTime} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
+            <input type="number" name="estimateTime" value={taskDataNew.estimateTime} onChange={handleInputChange} className="form-input border border-gray-300 rounded-md p-2 w-full" />
           </div>
           <div>
             <label className="block mb-1" htmlFor="assignedTo">Assigned To</label>
-            <select name="assignedTo" value={taskData.assignedTo} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
+            <select name="assignedTo" value={taskDataNew.assignedTo} onChange={handleInputChange} className="form-select border border-gray-300 rounded-md p-2 w-full">
               <option value="">Select User</option>
               {users.map(user => (
                 <option key={user._id} value={user._id}>{user.name}</option>
@@ -402,7 +402,7 @@ const SubTasks = () => {
           </div>
           <div className="col-span-3">
             <label className="block mb-1" htmlFor="description">Description</label>
-            <textarea name="description" value={taskData.description} onChange={handleInputChange} className="form-textarea border border-gray-300 rounded-md p-2 w-full" rows="3"></textarea>
+            <textarea name="description" value={taskDataNew.description} onChange={handleInputChange} className="form-textarea border border-gray-300 rounded-md p-2 w-full" rows="3"></textarea>
           </div>
           <div className="col-span-3 flex justify-end">
             <Button type="primary" htmlType="submit">Add Task</Button>

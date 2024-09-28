@@ -154,9 +154,9 @@ const linkData = [
     to: "/tasks",
     permission: "Manage Tasks",
     children: [
-      { key: "tasks", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tasks", to: "/tasks/tasks", permission: "Manage Tasks" },
+      { key: "tasks", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tasks", to: "/tasks", permission: "Manage Tasks" },
       { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Status", to: "/tasks/status", permission: "Manage Tasks" },
-      { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Task list ", to: "/tasks", permission: "Manage Tasks" },
+      // { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Task list ", to: "/tasks", permission: "Manage Tasks" },
     ],
   },
   { 
