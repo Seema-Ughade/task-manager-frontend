@@ -1,15 +1,16 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Modal, Button } from 'antd'; // Import Ant Design Modal and Button
 import ReactQuill from 'react-quill';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Tasks = () => {
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
   const [tasks, setTasks] = useState([]);
-  const [columns, setColumns] = useState({});
+  const [statuses, setStatuses] = useState({});
   const [error, setError] = useState('');
   const [viewType, setViewType] = useState('grid');
   const [isModalVisible, setIsModalVisible] = useState(false); // State for task assignment modal
@@ -40,27 +41,46 @@ const Tasks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Fetch projects and users first
         const projectsResponse = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
         setProjects(projectsResponse.data);
-
+  
         const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
         setUsers(usersResponse.data);
-
-        // const tasksResponse = await axios.get('http://localhost:5000/api/tasks');
-        const tasksResponse = await axios.get('http://127.0.0.1:5000/api/tasks');
-
-        const columnsResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/columns');
-        setTasks(tasksResponse.data);
-        setColumns(columnsResponse.data);
+  
+        // Fetch statuses and tasks concurrently
+        const [statusesResponse, tasksResponse] = await Promise.all([
+          axios.get('https://task-manager-backend-btas.onrender.com/api/statuses'),
+          axios.get('https://task-manager-backend-btas.onrender.com/api/tasks'),
+        ]);
+  
+        const statuses = statusesResponse.data;
+        const tasks = tasksResponse.data;
+  
+        // Format statuses to a more usable format
+        const formattedStatuses = statuses.reduce((acc, status) => {
+          acc[status._id] = { title: status.name };
+          return acc;
+        }, {});
+  
+        // Map tasks to include statusId
+        const tasksWithStatusId = tasks.map(task => {
+          const defaultStatusId = Object.keys(formattedStatuses)[0]; // Link to the first status (change logic as needed)
+          return { ...task, statusId: task.statusId || defaultStatusId }; // Fallback to default if missing
+        });
+  
+        // Set states
+        setTasks(tasksWithStatusId);
+        setStatuses(formattedStatuses);
       } catch (error) {
         setError("Failed to fetch data. Please try again.");
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data:", error.response ? error.response.data : error.message);
       }
     };
-
+  
     fetchData();
   }, []);
-
+  
   const handleToggleView = () => {
     setViewType((prevType) => (prevType === 'grid' ? 'list' : 'grid'));
   };
@@ -119,11 +139,16 @@ const Tasks = () => {
     }
   
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/tasks', formData, {
+      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      setIsModalVisibleNew(false);
+
+      // Optionally show a success message (e.g., using Toast)
+      toast.success('Task added successfully!');
+  
       console.log('Task added successfully:', response.data);
       // Reset form and close modal or handle success
     } catch (error) {
@@ -134,19 +159,50 @@ const Tasks = () => {
   
 
 
-    const handleAssignTask = async (e) => {
+  //   const handleAssignTask = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const responsedata = await axios.post('http://127.0.0.1:5000/api/Assigntask', addTask);
+
+  //     setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
+
+  //     handleCancel(); // Close the modal after adding task
+  //   } catch (error) {
+  //     console.error("Error adding task:", error);
+  //   }
+  // };
+  const handleAssignTask = async (e) => {
     e.preventDefault();
+  
+    const formData = {
+      assignedTo: taskData.assignedTo,
+      projectId: taskData.projectId,
+      dueDate: taskData.dueDate,
+      status: taskData.status,
+      pageSize: taskData.pageSize,
+      sortBy: taskData.sortBy,
+    };
+    
+  
     try {
-      const responsedata = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', addTask);
-
-      setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
-
-      handleCancel(); // Close the modal after adding task
+      // Send POST request to the API
+      const response = await axios.post(
+        'http://127.0.0.1:5000/api/Assigntask', 
+        formData
+      );
+  
+      // Handle successful response (add task to state, show success message, etc.)
+      setTasks((prevTasks) => [...prevTasks, response.data]);
+      setIsModalVisible(false);
+  
+      toast.success('Task assigned successfully!');
     } catch (error) {
-      console.error("Error adding task:", error);
+      // Handle error
+      console.error('Error assigning task:', error.response?.data || error);
+      toast.error('Failed to assign task');
     }
   };
-
+  
 
 
 
@@ -161,15 +217,29 @@ const Tasks = () => {
 
 
   
-  const handleOnDragEnd = (result) => {
-    if (!result.destination) return;
+  // const handleOnDragEnd = (result) => {
+  //   if (!result.destination) return;
 
-    const updatedTasks = [...tasks];
-    const [movedTask] = updatedTasks.splice(result.source.index, 1);
-    movedTask.columnId = result.destination.droppableId;
-    updatedTasks.splice(result.destination.index, 0, movedTask);
-    setTasks(updatedTasks);
-  };
+  //   const updatedTasks = [...tasks];
+  //   const [movedTask] = updatedTasks.splice(result.source.index, 1);
+  //   movedTask.columnId = result.destination.droppableId;
+  //   updatedTasks.splice(result.destination.index, 0, movedTask);
+  //   setTasks(updatedTasks);
+  // };
+
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return; // Do nothing if dropped outside a valid area
+
+    const updatedTasks = [...tasks]; // Create a copy of the current tasks
+    const [movedTask] = updatedTasks.splice(result.source.index, 1); // Remove the dragged task
+    movedTask.statusId = result.destination.droppableId; // Update the statusId of the moved task
+    updatedTasks.splice(result.destination.index, 0, movedTask); // Insert the task into the new position
+    setTasks(updatedTasks); // Update the state with the new tasks order
+};
+
+
+
+
 
   const handleReset = () => {
     setTaskData({
@@ -197,14 +267,14 @@ const Tasks = () => {
   };
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-lg mt-5 mb-6">
+    <div className="p-4 bg-white shadow-md rounded-lg mt-5  mb-6">
       {error && <p className="text-red-600">{error}</p>}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">KANBAN List</h1>
+      <div className="flex bg-gray-100 p-8 justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">TASKS</h1>
         <nav className="flex gap-2 items-center">
           <Button
             onClick={showModal}
-            className="bg-yellow-400 text-white hover:bg-yellow-500 transition"
+            className="bg-yellow-400 w-28  text-white hover:bg-yellow-500 transition"
             title="Assign Task"
           >
             Assign To
@@ -214,7 +284,7 @@ const Tasks = () => {
             className="bg-green-400 text-white hover:bg-yellow-500 transition"
             title="Assign Task"
           >
-            Add task
+            New Task
           </Button>
           <Button
             onClick={handleToggleView}
@@ -347,13 +417,6 @@ const Tasks = () => {
   </form>
 </Modal>
 
-
-
-
-
-
-
-
       {/* Assign Task Form **************************************************/}
       <Modal
         title="Assign Task"
@@ -415,33 +478,59 @@ const Tasks = () => {
         </form>
       </Modal>
   
-      <DragDropContext onDragEnd={handleOnDragEnd}>
-        {Object.entries(columns).map(([columnId, column]) => (
-          <Droppable key={columnId} droppableId={columnId}>
+      <div className=" mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  {error && <p className="text-red-500">{error}</p>}
+  <DragDropContext onDragEnd={handleOnDragEnd}>
+    {Object.keys(statuses).length > 0 ? (
+      Object.keys(statuses).map((statusId) => {
+        const status = statuses[statusId];
+        return (
+          <Droppable key={statusId} droppableId={statusId}>
             {(provided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className="task-column">
-                <h2 className="text-lg font-semibold mb-2">{column.title}</h2>
-                {tasks.filter(task => task.columnId === columnId).map((task, index) => (
-                  <Draggable key={task._id} draggableId={task._id} index={index}>
-                    {(provided) => (
-                      <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        className="task-card border border-gray-300 rounded-md p-2 mb-2 shadow"
-                      >
-                        <p>{task.title}</p>
-                        <button onClick={() => handleDeleteTask(task._id)} className="text-red-600">Delete</button>
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="task-column  bg-gray-100 rounded-lg p-4 shadow-lg transition-transform transform hover:scale-105"
+              >
+                <h2 className="text-xl font-bold mb-4 text-purple-700">{status.title}</h2>
+                {tasks
+                  .filter(task => task.statusId === statusId)
+                  .map((task, index) => (
+                    <Draggable key={task._id} draggableId={task._id} index={index}>
+                      {(provided) => (
+                        <div
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                          className="task-card bg-white border border-gray-300 rounded-md p-4 mb-4 shadow-md transition-transform transform hover:shadow-xl"
+                        >
+                          <p className="font-bold text-gray-900">{task.title}</p>
+                          <p className="text-sm text-gray-600 mb-2">{task.description}</p>
+                          <p className="text-xs text-gray-400">
+                            Due: {new Date(task.dueDate).toLocaleDateString()}
+                          </p>
+                          <button
+                            onClick={() => handleDeleteTask(task._id)}
+                            className="mt-2 text-red-600 hover:text-red-800 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
-        ))}
-      </DragDropContext>
+        );
+      })
+    ) : (
+      <p className="text-gray-600">Loading statuses...</p>
+    )}
+  </DragDropContext>
+</div>
+ 
     </div>
   );
   };

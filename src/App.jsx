@@ -22,10 +22,13 @@ import Events from "./Pages/Events";
 import Team from "./Pages/Team";
 import Trash from "./Pages/Trash";
 import Login from "./Login/login";
-
+import Tags from './Pages/Settings/Tags'
 import Status from "./Components/Subpage/Tasks/Status";
 import SubTasks from "../src/Components/Subpage/Tasks/SubTasks";
 
+import ActivityTypes from './Pages/Settings/ActivityTypes'
+import Taxes from './Pages/Settings/Taxes'
+import Settings from './Pages/Settings/Settings'
 
 //subpages
 import SimpleTabs from "./Components/Subpage/SimpleTabs";
@@ -49,10 +52,10 @@ const App = () => {
               <Route path="/departments" element={<Departments />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/tasks-data" element={<Tasks />} />
 
               <Route path="/tasks/status" element={<Status />} />
-              <Route path="/tasks/tasks" element={<SubTasks />} />
+              {/* <Route path="/tasks/tasks" element={<SubTasks />} /> */}
 
 
 
@@ -63,6 +66,18 @@ const App = () => {
               <Route path="/archived-users" element={<ArchivedUsers />} />
               <Route path="/roles" element={<Roles />} />
               <Route path="/sales" element={<Sales />} />
+
+
+              <Route path="/tags" element={<Tags />} />
+              <Route path="/activity-types" element={<ActivityTypes />} />
+              <Route path="/taxes" element={<Taxes />} />
+              <Route path="/settings" element={<Settings />} />
+
+
+
+
+
+
               <Route path="/activity-logs" element={<ActivityLogs />} />
               <Route path="/events" element={<Events />} />
               <Route path="/team" element={<Team />} />

@@ -154,7 +154,7 @@ const linkData = [
     to: "/tasks",
     permission: "Manage Tasks",
     children: [
-      { key: "tasks", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tasks", to: "/tasks", permission: "Manage Tasks" },
+      { key: "tasks", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tasks", to: "/tasks-data", permission: "Manage Tasks" },
       { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Status", to: "/tasks/status", permission: "Manage Tasks" },
       // { key: "status", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Task list ", to: "/tasks", permission: "Manage Tasks" },
     ],
@@ -200,6 +200,19 @@ const linkData = [
     label: "Sales", 
     to: "/sales", 
     permission: "Manage Invoices" 
+  },
+  {
+    key: "settings",
+    icon: <FaTasks style={{ color: "#eb2f96" }} />,
+    label: "Settings",
+    to: "/settings",
+    permission: "Manage Settings",
+    children: [
+      { key: "tags", icon: <MdTaskAlt style={{ color: "#52c41a" }} />, label: "Tags", to: "/tags", permission: "Manage Settings" },
+      { key: "activityTypes", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "ActivityTypes", to: "/activity-types", permission: "Manage Settings" },
+      { key: "taxes", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Taxes ", to: "/taxes", permission: "Manage Tasks" },
+      { key: "settings", icon: <MdOutlinePendingActions style={{ color: "#faad14" }} />, label: "Settings ", to: "/settings", permission: "Manage Tasks" },
+    ],
   },
   { 
     key: "activity-logs", 
