@@ -118,10 +118,21 @@ const Projects = () => {
 
   return (
     <div className="container py-4">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">Projects</h1>
-      <Button type="primary" className="mb-4" onClick={() => showModal()}>
+      {/* <h1 className="text-2xl font-bold mb-4 text-gray-800">Projects</h1>
+      {/* <Button type="primary" className="mb-4" onClick={() => showModal()}>
         New Project
-      </Button>
+      </Button> */}
+      {/* <div className="flex justify-end">
+  <Button type="primary" className="mb-4" onClick={() => showModal()}>
+    New Project
+  </Button>
+</div> */} 
+<div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold">Projects</h1>
+        <button onClick={() => showModal()} className="px-4 py-2 bg-blue-600 text-white rounded">
+          New Projects +
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {paginatedProjects.length > 0 ? (
