@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'; // Import Ant Design icons
 
 const Events = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [viewType, setViewType] = useState('month'); // 'month' or 'week'
   const [selectedMonth, setSelectedMonth] = useState('2024-10'); // Using YYYY-MM format for date picker
   const [newEvent, setNewEvent] = useState({
@@ -11,6 +14,22 @@ const Events = () => {
     type: '',
     description: ''
   });
+  const [events, setEvents] = useState([]);
+  const [editingEventId, setEditingEventId] = useState(null);
+
+  // Fetch events from the backend API
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/events'); // Adjust URL if needed
+      setEvents(response.data);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,8 +39,52 @@ const Events = () => {
     }));
   };
 
-  const handleAddEvent = () => {
-    console.log('Event Added:', newEvent);
+  const handleAddEvent = async () => {
+    try {
+      if (isEditing) {
+        await axios.put(`http://localhost:5000/api/events/${editingEventId}`, newEvent);
+      } else {
+        await axios.post('http://localhost:5000/api/events', newEvent);
+      }
+      resetForm();
+      fetchEvents();
+    } catch (error) {
+      console.error('Error adding/updating event:', error);
+    }
+  };
+
+  const handleEditEvent = (event) => {
+    setNewEvent({
+      title: event.title,
+      startDate: event.startDate,
+      endDate: event.endDate,
+      type: event.type,
+      description: event.description
+    });
+    setEditingEventId(event._id);
+    setIsEditing(true);
+    setShowPopup(true);
+  };
+
+  const handleDeleteEvent = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/events/${id}`);
+      fetchEvents();
+    } catch (error) {
+      console.error('Error deleting event:', error);
+    }
+  };
+
+  const resetForm = () => {
+    setNewEvent({
+      title: '',
+      startDate: '',
+      endDate: '',
+      type: '',
+      description: ''
+    });
+    setEditingEventId(null);
+    setIsEditing(false);
     setShowPopup(false);
   };
 
@@ -59,32 +122,62 @@ const Events = () => {
     const numDays = new Date(selectedMonth.split('-')[0], selectedMonth.split('-')[1], 0).getDate(); // Get number of days in the month
     const firstDay = new Date(selectedMonth + '-01').getDay(); // Get the first day of the month
     const calendarDays = Array.from({ length: numDays }, (_, index) => index + 1); // Array of days in the month
-
+  
     if (viewType === 'month') {
       return (
         <div className="grid grid-cols-7 gap-4 text-center mb-6">
-          <div className="font-bold">Sun</div>
-          <div className="font-bold">Mon</div>
-          <div className="font-bold">Tue</div>
-          <div className="font-bold">Wed</div>
-          <div className="font-bold">Thu</div>
-          <div className="font-bold">Fri</div>
-          <div className="font-bold">Sat</div>
+          <div className="font-bold text-white bg-red-500 p-2">Sun</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Mon</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Tue</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Wed</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Thu</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Fri</div>
+          <div className="font-bold text-white bg-blue-500 p-2">Sat</div>
           {/* Empty slots for days before the first day of the month */}
           {Array.from({ length: firstDay }).map((_, index) => (
             <div key={index} className="border p-2 h-20"></div>
           ))}
-          {calendarDays.map((day) => (
-            <div
-              key={day}
-              className="border p-2 h-20 flex justify-center items-center"
-            >
-              {day}
-            </div>
-          ))}
+          {calendarDays.map((day) => {
+            const dayEvents = events.filter(event => {
+              const eventStart = new Date(event.startDate);
+              const eventEnd = new Date(event.endDate);
+              // Check if the event is in the selected month and year
+              return (
+                eventStart.getFullYear() === Number(selectedMonth.split('-')[0]) &&
+                eventStart.getMonth() === Number(selectedMonth.split('-')[1]) - 1 && // Months are 0-indexed
+                eventEnd.getFullYear() === Number(selectedMonth.split('-')[0]) &&
+                eventEnd.getMonth() === Number(selectedMonth.split('-')[1]) - 1 &&
+                (eventStart.getDate() <= day && eventEnd.getDate() >= day)
+              );
+            });
+  
+            return (
+              <div
+                key={day}
+                className="border p-2 h-20 flex flex-col justify-center items-center"
+              >
+                {day}
+                {/* Display one div for the first event that spans this day */}
+                {dayEvents.length > 0 && (
+                  <div className="text-xs text-gray-600 flex justify-between items-center w-full mt-1">
+                    <span>{dayEvents[0].title}</span> {/* Show only the first event title */}
+                    <div className='flex space-x-2'> {/* Add space between icons */}
+                      <button onClick={() => handleEditEvent(dayEvents[0])} className="text-blue-500 text-xs">
+                        <EditOutlined /> {/* Ant Design Edit Icon */}
+                      </button>
+                      <button onClick={() => handleDeleteEvent(dayEvents[0]._id)} className="text-red-500 text-xs">
+                        <DeleteOutlined /> {/* Ant Design Delete Icon */}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       );
     } else if (viewType === 'week') {
+      // Render week view (not implemented)
       return (
         <div className="grid grid-cols-7 gap-4 text-center mb-6">
           <div className="font-bold">Sun</div>
@@ -106,7 +199,7 @@ const Events = () => {
       );
     }
   };
-
+  
   return (
     <div className="p-5">
       <div className="flex justify-between items-center mb-6">
@@ -135,7 +228,10 @@ const Events = () => {
           {/* Add New Event */}
           <button
             className="px-4 py-2 bg-blue-600 text-white rounded"
-            onClick={() => setShowPopup(true)}
+            onClick={() => {
+              resetForm();
+              setShowPopup(true);
+            }}
           >
             New Event
           </button>
@@ -161,13 +257,13 @@ const Events = () => {
       {/* Calendar Rendering */}
       {renderCalendar()}
 
-      {/* Popup for Adding Event */}
+      {/* Popup for Adding or Editing Event */}
       {showPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg shadow-lg">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">New Event</h2>
-              <button onClick={() => setShowPopup(false)} className="text-gray-600 font-bold text-xl">&times;</button>
+              <h2 className="text-xl font-bold">{isEditing ? 'Edit Event' : 'New Event'}</h2>
+              <button onClick={resetForm} className="text-gray-600 font-bold text-xl">&times;</button>
             </div>
             <div className="space-y-4">
               <div>
@@ -237,7 +333,7 @@ const Events = () => {
 
             <div className="flex justify-end mt-6 space-x-4">
               <button
-                onClick={() => setShowPopup(false)}
+                onClick={resetForm}
                 className="px-4 py-2 border border-gray-300 rounded"
               >
                 Cancel
@@ -246,7 +342,7 @@ const Events = () => {
                 onClick={handleAddEvent}
                 className="px-4 py-2 bg-blue-600 text-white rounded"
               >
-                Add Event
+                {isEditing ? 'Update Event' : 'Add Event'}
               </button>
             </div>
           </div>

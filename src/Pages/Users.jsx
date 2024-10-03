@@ -21,7 +21,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/users');
+      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
       setUsers(response.data.map(user => ({
         ...user,
         password: undefined, // Exclude password from user data
@@ -78,12 +78,12 @@ const Users = () => {
 
     try {
       const response = editingUser
-        ? await axios.put(`http://127.0.0.1:5000/api/users/${editingUser._id}`, formData, {
+        ? await axios.put(`https://task-manager-backend-btas.onrender.com/api/users/${editingUser._id}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           })
-        : await axios.post('http://127.0.0.1:5000/api/users', formData, {
+        : await axios.post('https://task-manager-backend-btas.onrender.com/api/users', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -104,7 +104,7 @@ const Users = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/users/${userId}`);
+      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/users/${userId}`);
       message.success('User deleted successfully');
       fetchUsers();
     } catch (error) {

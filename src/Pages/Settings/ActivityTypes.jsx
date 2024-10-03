@@ -208,7 +208,7 @@ const ActivityTypes = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {currentActivityTypes.map((activityType, index) => (
-              <div key={index} className="relative bg-white p-4 border rounded shadow-md hover:shadow-lg transition-shadow duration-300">
+              <div key={index} className="relative bg-white  p-6 mt-3 border rounded shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="absolute top-2 right-2">
                   <button onClick={() => handleEllipsisClick(index)}>
                     &#x22EE;
