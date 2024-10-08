@@ -162,7 +162,7 @@
 //   //   const handleAssignTask = async (e) => {
 //   //   e.preventDefault();
 //   //   try {
-//   //     const responsedata = await axios.post('http://127.0.0.1:5000/api/Assigntask', addTask);
+//   //     const responsedata = await axios.post('https://task-manager-backend-btas.onrender.com/api/Assigntask', addTask);
 
 //   //     setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
 
@@ -187,7 +187,7 @@
 //     try {
 //       // Send POST request to the API
 //       const response = await axios.post(
-//         'http://127.0.0.1:5000/api/Assigntask', 
+//         'https://task-manager-backend-btas.onrender.com/api/Assigntask', 
 //         formData
 //       );
   
@@ -676,9 +676,9 @@ const Tasks = () => {
     }
   
     try {
-      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', formData, {
+      const response = await axios.post('http://127.0.0.1:5000/api/tasks', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'multipart/form-data'
         },
       });
       setIsModalVisibleNew(false);
@@ -699,7 +699,7 @@ const Tasks = () => {
   //   const handleAssignTask = async (e) => {
   //   e.preventDefault();
   //   try {
-  //     const responsedata = await axios.post('http://127.0.0.1:5000/api/Assigntask', addTask);
+  //     const responsedata = await axios.post('https://task-manager-backend-btas.onrender.com/api/Assigntask', addTask);
 
   //     setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
 
@@ -724,7 +724,7 @@ const Tasks = () => {
     try {
       // Send POST request to the API
       const response = await axios.post(
-        'http://127.0.0.1:5000/api/Assigntask', 
+        'https://task-manager-backend-btas.onrender.com/api/Assigntask', 
         formData
       );
   
@@ -759,7 +759,7 @@ const Tasks = () => {
         return;
       }
   
-      const response = await axios.delete(`http://127.0.0.1:5000/api/tasks/${taskId}`);
+      const response = await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
       
       // Log response data for debugging
       console.log("Delete response:", response.data);
