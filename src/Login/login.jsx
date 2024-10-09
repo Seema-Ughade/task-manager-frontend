@@ -98,7 +98,7 @@
 //   const handleLogin = async (values) => {
 //     setLoading(true);
 //     try {
-//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/auth/login', values);
+//       const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/auth/login', values);
 //       const { token, user } = response.data;
       
 //       // Store the JWT token in local storage
@@ -144,7 +144,7 @@
 
 //   const fetchRoleAndPermissions = async (roleId) => {
 //     try {
-//       const response = await axios.get(`https://task-manager-backend-btas.onrender.com/api/roles/${roleId}`);
+//       const response = await axios.get(`https://task-manager-backend-1-3zvs.onrender.com/api/roles/${roleId}`);
 //       setRole(response.data);
 //     } catch (error) {
 //       message.error('Failed to fetch role and permissions');
@@ -184,7 +184,7 @@
 
 //   const fetchLoggedInUser = async (token) => {
 //     try {
-//       const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/auth/me', {
+//       const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/auth/me', {
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //         },
@@ -220,14 +220,14 @@ const Login = ({ onLogin }) => { // Change setLoggedInUser to onLogin
   const handleLogin = async (values) => {
     setLoading(true);
     try {
-      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/auth/login', values);
+      const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/auth/login', values);
       const { token, user } = response.data;
       
       // Store the JWT token in local storage
       localStorage.setItem('authToken', token);
 
       // Fetch role details based on user role ID
-      const roleResponse = await axios.get(`https://task-manager-backend-btas.onrender.com/api/roles/${user.role}`);
+      const roleResponse = await axios.get(`https://task-manager-backend-1-3zvs.onrender.com/api/roles/${user.role}`);
       const userWithRole = { ...user, role: roleResponse.data };
 
       // Call the onLogin prop with the user details

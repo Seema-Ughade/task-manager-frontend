@@ -21,7 +21,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
       setUsers(response.data.map(user => ({
         ...user,
         password: undefined, // Exclude password from user data
@@ -33,7 +33,7 @@ const Users = () => {
 
   const fetchRoles = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/roles');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/roles');
       setRoles(response.data);
     } catch (error) {
       message.error('Failed to fetch roles');
@@ -42,7 +42,7 @@ const Users = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/projects');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/projects');
       setProjects(response.data);
     } catch (error) {
       message.error('Failed to fetch projects');
@@ -78,12 +78,12 @@ const Users = () => {
 
     try {
       const response = editingUser
-        ? await axios.put(`https://task-manager-backend-btas.onrender.com/api/users/${editingUser._id}`, formData, {
+        ? await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/users/${editingUser._id}`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
           })
-        : await axios.post('https://task-manager-backend-btas.onrender.com/api/users', formData, {
+        : await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/users', formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
@@ -104,7 +104,7 @@ const Users = () => {
 
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/users/${userId}`);
+      await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/users/${userId}`);
       message.success('User deleted successfully');
       fetchUsers();
     } catch (error) {

@@ -7,7 +7,7 @@ import departmentsReducer from "./reducers/departmentsReducer";
 
 
 // PRODUCTION
-export const server = "https://task-manager-backend-btas.onrender.com/api";
+export const server = "https://task-manager-backend-1-3zvs.onrender.com/api";
 
 // DEVELOPMENT
 // export const server = "http://localhost:2000/api/v1";

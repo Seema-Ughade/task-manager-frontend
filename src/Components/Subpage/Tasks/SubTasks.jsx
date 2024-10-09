@@ -25,14 +25,14 @@
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       try {
-//         const projectsResponse = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
+//         const projectsResponse = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/projects");
 //         setProjects(projectsResponse.data);
 
-//         const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
+//         const usersResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
 //         setUsers(usersResponse.data);
 
-//         const tasksResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/tasks');
-//         const columnsResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/columns');
+//         const tasksResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/tasks');
+//         const columnsResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/columns');
 //         setTasks(tasksResponse.data);
 //         setColumns(columnsResponse.data);
 //       } catch (error) {
@@ -65,7 +65,7 @@
 //   const handleAddTask = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskDataNew);
+//       const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tasks', taskDataNew);
 //       setTasks((prevTasks) => [...prevTasks, response.data]);
 //       handleCancel(); // Close the modal after adding task
 //     } catch (error) {
@@ -75,7 +75,7 @@
 
 //   const handleDeleteTask = async (taskId) => {
 //     try {
-//       await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
+//       await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tasks/${taskId}`);
 //       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); // Use _id for filtering
 //     } catch (error) {
 //       console.error("Error deleting task:", error);
@@ -255,10 +255,10 @@ const SubTasks = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const projectsResponse = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
-        const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
-        const tasksResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/tasks');
-        const columnsResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/columns');
+        const projectsResponse = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/projects");
+        const usersResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
+        const tasksResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/tasks');
+        const columnsResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/columns');
 
         setProjects(projectsResponse.data);
         setUsers(usersResponse.data);
@@ -296,7 +296,7 @@ const SubTasks = () => {
   const handleAddTask = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', taskDataNew);
+      const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tasks', taskDataNew);
       setTasks((prevTasks) => [...prevTasks, response.data]);
       notification.success({ message: 'Task added successfully!' });
       handleCancel(); // Close modal and reset form
@@ -308,7 +308,7 @@ const SubTasks = () => {
 
   const handleDeleteTask = async (taskId) => {
     try {
-      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
+      await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tasks/${taskId}`);
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId));
       notification.success({ message: 'Task deleted successfully!' });
     } catch (error) {

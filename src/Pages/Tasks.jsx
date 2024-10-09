@@ -42,16 +42,16 @@
 //     const fetchData = async () => {
 //       try {
 //         // Fetch projects and users first
-//         const projectsResponse = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
+//         const projectsResponse = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/projects");
 //         setProjects(projectsResponse.data);
   
-//         const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
+//         const usersResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
 //         setUsers(usersResponse.data);
   
 //         // Fetch statuses and tasks concurrently
 //         const [statusesResponse, tasksResponse] = await Promise.all([
-//           axios.get('https://task-manager-backend-btas.onrender.com/api/statuses'),
-//           axios.get('https://task-manager-backend-btas.onrender.com/api/tasks'),
+//           axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/statuses'),
+//           axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/tasks'),
 //         ]);
   
 //         const statuses = statusesResponse.data;
@@ -139,7 +139,7 @@
 //     }
   
 //     try {
-//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tasks', formData, {
+//       const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tasks', formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -162,7 +162,7 @@
 //   //   const handleAssignTask = async (e) => {
 //   //   e.preventDefault();
 //   //   try {
-//   //     const responsedata = await axios.post('https://task-manager-backend-btas.onrender.com/api/Assigntask', addTask);
+//   //     const responsedata = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/Assigntask', addTask);
 
 //   //     setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
 
@@ -187,7 +187,7 @@
 //     try {
 //       // Send POST request to the API
 //       const response = await axios.post(
-//         'https://task-manager-backend-btas.onrender.com/api/Assigntask', 
+//         'https://task-manager-backend-1-3zvs.onrender.com/api/Assigntask', 
 //         formData
 //       );
   
@@ -208,7 +208,7 @@
 
 //   const handleDeleteTask = async (taskId) => {
 //     try {
-//       await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
+//       await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tasks/${taskId}`);
 //       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); // Use _id for filtering
 //     } catch (error) {
 //       console.error("Error deleting task:", error);
@@ -585,16 +585,16 @@ const Tasks = () => {
     const fetchData = async () => {
       try {
         // Fetch projects and users first
-        const projectsResponse = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
+        const projectsResponse = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/projects");
         setProjects(projectsResponse.data);
   
-        const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
+        const usersResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
         setUsers(usersResponse.data);
   
         // Fetch statuses and tasks concurrently
         const [statusesResponse, tasksResponse] = await Promise.all([
-          axios.get('https://task-manager-backend-btas.onrender.com/api/statuses'),
-          axios.get('https://task-manager-backend-btas.onrender.com/api/tasks'),
+          axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/statuses'),
+          axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/tasks'),
         ]);
   
         const statuses = statusesResponse.data;
@@ -676,7 +676,7 @@ const Tasks = () => {
     }
   
     try {
-      const response = await axios.post('https://task-manager-newbackend.onrender.com/api/tasks', formData, {
+      const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tasks', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -699,7 +699,7 @@ const Tasks = () => {
   //   const handleAssignTask = async (e) => {
   //   e.preventDefault();
   //   try {
-  //     const responsedata = await axios.post('https://task-manager-backend-btas.onrender.com/api/Assigntask', addTask);
+  //     const responsedata = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/Assigntask', addTask);
 
   //     setaddTask((prevTasks) => [...prevTasks, responsedata.data]);
 
@@ -724,7 +724,7 @@ const Tasks = () => {
     try {
       // Send POST request to the API
       const response = await axios.post(
-        'https://task-manager-backend-btas.onrender.com/api/Assigntask', 
+        'https://task-manager-backend-1-3zvs.onrender.com/api/Assigntask', 
         formData
       );
   
@@ -745,7 +745,7 @@ const Tasks = () => {
 
   // const handleDeleteTask = async (taskId) => {
   //   try {
-  //     await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
+  //     await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tasks/${taskId}`);
   //     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); // Use _id for filtering
   //   } catch (error) {
   //     console.error("Error deleting task:", error);
@@ -759,7 +759,7 @@ const Tasks = () => {
         return;
       }
   
-      const response = await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tasks/${taskId}`);
+      const response = await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tasks/${taskId}`);
       
       // Log response data for debugging
       console.log("Delete response:", response.data);

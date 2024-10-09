@@ -11,7 +11,7 @@
 
 //   const fetchClients = async () => {
 //     try {
-//       const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/clients');
+//       const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/clients');
 //       setClients(response.data);
 //     } catch (error) {
 //       console.error('Error fetching clients:', error);
@@ -20,7 +20,7 @@
 
 //   const fetchDepartments = async () => {
 //     try {
-//       const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/departments');
+//       const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/departments');
 //       setDepartments(response.data);
 //     } catch (error) {
 //       console.error('Error fetching departments:', error);
@@ -45,7 +45,7 @@
 //     }
 
 //     try {
-//       const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/clients', formData, {
+//       const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/clients', formData, {
 //         headers: {
 //           'Content-Type': 'multipart/form-data',
 //         },
@@ -68,7 +68,7 @@
 
 //   const handleDelete = async (clientId) => {
 //     try {
-//       await axios.delete(`https://task-manager-backend-btas.onrender.com/api/clients/${clientId}`);
+//       await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/clients/${clientId}`);
 //       setClients(clients.filter(client => client.id !== clientId));
 //     } catch (error) {
 //       console.error('Error deleting client:', error);
@@ -222,7 +222,7 @@ const Clients = () => {
   const fetchClients = async () => {
     try {
       setLoading(true); // Start loading
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/clients');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/clients');
       setClients(response.data);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -234,7 +234,7 @@ const Clients = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/departments');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/departments');
       setDepartments(response.data);
     } catch (error) {
       console.error('Error fetching departments:', error);
@@ -261,7 +261,7 @@ const Clients = () => {
 
     try {
       if (newClient._id) {
-        const response = await axios.put(`https://task-manager-backend-btas.onrender.com/api/clients/${newClient._id}`, formData, {
+        const response = await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/clients/${newClient._id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -269,7 +269,7 @@ const Clients = () => {
         setClients(clients.map(client => (client._id === newClient._id ? response.data : client)));
         toast.success('Client updated successfully!');
       } else {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/clients', formData, {
+        const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/clients', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -298,7 +298,7 @@ const Clients = () => {
 
   const handleDelete = async (clientId) => {
     try {
-      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/clients/${clientId}`);
+      await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/clients/${clientId}`);
       setClients(clients.filter(client => client._id !== clientId));
       toast.success('Client deleted successfully!');
     } catch (error) {

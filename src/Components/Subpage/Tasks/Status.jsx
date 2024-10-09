@@ -20,7 +20,7 @@ const Status = () => {
       try {
         setLoading(true); // Start shimmer effect
 
-        const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/statuses');
+        const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/statuses');
         if (Array.isArray(response.data)) {
           setStatuses(response.data);
         } else {
@@ -61,7 +61,7 @@ const Status = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm('Are you sure you want to delete this status?')) {
       try {
-        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/statuses/${id}`);
+        await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/statuses/${id}`);
         setStatuses(statuses.filter(status => status._id !== id));
       } catch (error) {
         console.error('Error deleting status:', error);
@@ -86,14 +86,14 @@ const Status = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/statuses/${editId}`, newStatus);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/statuses/${editId}`, newStatus);
         setStatuses(
           statuses.map((status) =>
             status._id === editId ? { ...status, ...newStatus } : status
           )
         );
       } else {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/statuses', newStatus);
+        const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/statuses', newStatus);
         setStatuses([...statuses, response.data]);
       }
 

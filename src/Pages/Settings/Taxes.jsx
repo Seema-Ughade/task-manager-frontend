@@ -21,7 +21,7 @@ const Taxes = () => {
     const fetchTaxes = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/taxes');
+        const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/taxes');
         if (Array.isArray(response.data)) {
           setTaxes(response.data);
         } else {
@@ -59,7 +59,7 @@ const Taxes = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm('Are you sure you want to delete this tax type?')) {
       try {
-        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/taxes/${id}`);
+        await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/taxes/${id}`);
         setTaxes(taxes.filter(tax => tax._id !== id));
       } catch (error) {
         console.error('Error deleting tax type:', error);
@@ -88,10 +88,10 @@ const Taxes = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/taxes/${editId}`, newTax);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/taxes/${editId}`, newTax);
         setTaxes(taxes.map((tax) => (tax._id === editId ? { ...tax, ...newTax } : tax)));
       } else {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/taxes', newTax);
+        const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/taxes', newTax);
         setTaxes([...taxes, response.data]);
       }
 
@@ -109,7 +109,7 @@ const Taxes = () => {
     try {
       const promises = taxesArray.map(tax => {
         const [name, rate] = tax.split(':');
-        return axios.post('https://task-manager-backend-btas.onrender.com/api/taxes', { name: name.trim(), rate: parseFloat(rate.trim()) });
+        return axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/taxes', { name: name.trim(), rate: parseFloat(rate.trim()) });
       });
       const responses = await Promise.all(promises);
       setTaxes([...taxes, ...responses.map(res => res.data)]);

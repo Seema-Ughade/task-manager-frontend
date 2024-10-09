@@ -20,7 +20,7 @@
 //   // Fetch events from the backend API
 //   const fetchEvents = async () => {
 //     try {
-//       const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/events'); // Adjust URL if needed
+//       const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/events'); // Adjust URL if needed
 //       setEvents(response.data);
 //     } catch (error) {
 //       console.error('Error fetching events:', error);
@@ -42,9 +42,9 @@
 //   const handleAddEvent = async () => {
 //     try {
 //       if (isEditing) {
-//         await axios.put(`https://task-manager-backend-btas.onrender.com/api/events/${editingEventId}`, newEvent);
+//         await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/events/${editingEventId}`, newEvent);
 //       } else {
-//         await axios.post('https://task-manager-backend-btas.onrender.com/api/events', newEvent);
+//         await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/events', newEvent);
 //       }
 //       resetForm();
 //       fetchEvents();
@@ -68,7 +68,7 @@
 
 //   const handleDeleteEvent = async (id) => {
 //     try {
-//       await axios.delete(`https://task-manager-backend-btas.onrender.com/api/events/${id}`);
+//       await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/events/${id}`);
 //       fetchEvents();
 //     } catch (error) {
 //       console.error('Error deleting event:', error);
@@ -386,7 +386,7 @@ const Events = () => {
   // Fetch events from the backend API
   const fetchEvents = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/events');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/events');
       setEvents(response.data);
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -469,9 +469,9 @@ const Events = () => {
 
       // Add or update event in your backend
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/events/${editingEventId}`, newEvent);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/events/${editingEventId}`, newEvent);
       } else {
-        await axios.post('https://task-manager-backend-btas.onrender.com/api/events', newEvent);
+        await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/events', newEvent);
       }
 
       // Create the event in Google Calendar and attach a Google Meet link
@@ -502,7 +502,7 @@ const Events = () => {
 
   const handleDeleteEvent = async (id) => {
     try {
-      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/events/${id}`);
+      await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/events/${id}`);
       fetchEvents();
     } catch (error) {
       console.error('Error deleting event:', error);

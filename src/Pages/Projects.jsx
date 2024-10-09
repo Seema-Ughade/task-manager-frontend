@@ -27,7 +27,7 @@ const Projects = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get("https://task-manager-backend-btas.onrender.com/api/projects");
+      const response = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/projects");
       setProjects(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -37,7 +37,7 @@ const Projects = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("https://task-manager-backend-btas.onrender.com/api/users");
+      const response = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/users");
       setUsers(response.data); // Assuming response.data is an array of users
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -77,10 +77,10 @@ const Projects = () => {
     try {
       const values = await form.validateFields();
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/projects/${currentProjectId}`, values);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/projects/${currentProjectId}`, values);
         message.success("Project updated successfully");
       } else {
-        await axios.post("https://task-manager-backend-btas.onrender.com/api/projects", values);
+        await axios.post("https://task-manager-backend-1-3zvs.onrender.com/api/projects", values);
         message.success("Project added successfully");
       }
       fetchProjects(); // Refresh project list
@@ -94,7 +94,7 @@ const Projects = () => {
   // Delete a project
   const deleteProject = async (projectId) => {
     try {
-      await axios.delete(`https://task-manager-backend-btas.onrender.com/api/projects/${projectId}`);
+      await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/projects/${projectId}`);
       message.success("Project deleted successfully");
       fetchProjects(); // Refresh project list
     } catch (error) {

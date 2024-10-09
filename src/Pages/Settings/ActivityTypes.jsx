@@ -22,7 +22,7 @@ const ActivityTypes = () => {
       try {
         setLoading(true); // Start shimmer effect
 
-        const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/activity-types');
+        const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/activity-types');
         if (Array.isArray(response.data)) {
           setActivityTypes(response.data);
         } else {
@@ -60,7 +60,7 @@ const ActivityTypes = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm('Are you sure you want to delete this activity type?')) {
       try {
-        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/activity-types/${id}`);
+        await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/activity-types/${id}`);
         setActivityTypes(activityTypes.filter(activityType => activityType._id !== id));
       } catch (error) {
         console.error('Error deleting activity type:', error);
@@ -89,10 +89,10 @@ const ActivityTypes = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/activity-types/${editId}`, newActivityType);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/activity-types/${editId}`, newActivityType);
         setActivityTypes(activityTypes.map((activityType) => (activityType._id === editId ? { ...activityType, ...newActivityType } : activityType)));
       } else {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/activity-types', newActivityType);
+        const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/activity-types', newActivityType);
         setActivityTypes([...activityTypes, response.data]);
       }
 
@@ -108,7 +108,7 @@ const ActivityTypes = () => {
     e.preventDefault();
     const activityTypesArray = bulkActivityTypes.split(',').map(activityType => activityType.trim()).filter(activityType => activityType);
     try {
-      const promises = activityTypesArray.map(activityType => axios.post('https://task-manager-backend-btas.onrender.com/api/activity-types', { name: activityType }));
+      const promises = activityTypesArray.map(activityType => axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/activity-types', { name: activityType }));
       const responses = await Promise.all(promises);
       setActivityTypes([...activityTypes, ...responses.map(res => res.data)]);
       setBulkActivityTypes(''); // Clear the bulk input after submission

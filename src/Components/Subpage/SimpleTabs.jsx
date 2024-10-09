@@ -11,15 +11,15 @@ const SimpleTabs = () => {
     const fetchData = async () => {
       try {
         // Fetch project data from API
-        const projectResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/projects');
+        const projectResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/projects');
         setProjectData(projectResponse.data[0]); // Assuming first project
 
         // Fetch users (members) from API
-        const usersResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/users');
+        const usersResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/users');
         setUsers(usersResponse.data); // Set all users
 
         // Fetch client data from API
-        const clientResponse = await axios.get('https://task-manager-backend-btas.onrender.com/api/clients');
+        const clientResponse = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/clients');
         setClient(clientResponse.data[0]); // Assuming first client
       } catch (error) {
         console.error("Error fetching data:", error);

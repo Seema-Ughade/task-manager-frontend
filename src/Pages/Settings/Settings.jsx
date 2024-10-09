@@ -99,7 +99,7 @@ useEffect(() => {
   const fetchTaskStatuses = async () => {
     setFetchingStatuses(true);
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/statuses');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/statuses');
       setStatuses(response.data); // Update status options in form
     } catch (error) {
       message.error('Failed to fetch task statuses');

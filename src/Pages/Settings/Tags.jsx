@@ -22,7 +22,7 @@ const Tags = () => {
       try {
         setLoading(true); // Start shimmer effect
 
-        const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/tags');
+        const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/tags');
         if (Array.isArray(response.data)) {
           setTags(response.data);
         } else {
@@ -60,7 +60,7 @@ const Tags = () => {
   const handleDeleteClick = async (id) => {
     if (window.confirm('Are you sure you want to delete this tag?')) {
       try {
-        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/tags/${id}`);
+        await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/tags/${id}`);
         setTags(tags.filter(tag => tag._id !== id));
       } catch (error) {
         console.error('Error deleting tag:', error);
@@ -89,10 +89,10 @@ const Tags = () => {
     e.preventDefault();
     try {
       if (isEditing) {
-        await axios.put(`https://task-manager-backend-btas.onrender.com/api/tags/${editId}`, newTag);
+        await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/tags/${editId}`, newTag);
         setTags(tags.map((tag) => (tag._id === editId ? { ...tag, ...newTag } : tag)));
       } else {
-        const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/tags', newTag);
+        const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tags', newTag);
         setTags([...tags, response.data]);
       }
 
@@ -108,7 +108,7 @@ const Tags = () => {
     e.preventDefault();
     const tagsArray = bulkTags.split(',').map(tag => tag.trim()).filter(tag => tag);
     try {
-      const promises = tagsArray.map(tag => axios.post('https://task-manager-backend-btas.onrender.com/api/tags', { name: tag }));
+      const promises = tagsArray.map(tag => axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/tags', { name: tag }));
       const responses = await Promise.all(promises);
       setTags([...tags, ...responses.map(res => res.data)]);
       setBulkTags(''); // Clear the bulk input after submission

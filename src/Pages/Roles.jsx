@@ -34,7 +34,7 @@ const Roles = () => {
   // Fetch roles from backend
   const fetchRoles = async () => {
     try {
-      const response = await axios.get('https://task-manager-backend-btas.onrender.com/api/roles');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/roles');
       setRoles(response.data);
     } catch (error) {
       console.error('Error fetching roles:', error);
@@ -47,7 +47,7 @@ const Roles = () => {
 
   const handleAddRole = async () => {
     try {
-      const response = await axios.post('https://task-manager-backend-btas.onrender.com/api/roles', newRole);
+      const response = await axios.post('https://task-manager-backend-1-3zvs.onrender.com/api/roles', newRole);
       setRoles([...roles, response.data]);
       resetForm();
     } catch (error) {
@@ -57,7 +57,7 @@ const Roles = () => {
 
   const handleEditRole = async () => {
     try {
-      await axios.put(`https://task-manager-backend-btas.onrender.com/api/roles/${editRoleId}`, newRole);
+      await axios.put(`https://task-manager-backend-1-3zvs.onrender.com/api/roles/${editRoleId}`, newRole);
       setRoles(roles.map(role => (role._id === editRoleId ? { ...role, ...newRole } : role)));
       resetForm();
     } catch (error) {
@@ -68,7 +68,7 @@ const Roles = () => {
   const handleDeleteRole = async (id) => {
     if (window.confirm('Are you sure you want to delete this role?')) {
       try {
-        await axios.delete(`https://task-manager-backend-btas.onrender.com/api/roles/${id}`);
+        await axios.delete(`https://task-manager-backend-1-3zvs.onrender.com/api/roles/${id}`);
         setRoles(roles.filter(role => role._id !== id));
       } catch (error) {
         console.error('Error deleting role:', error);
