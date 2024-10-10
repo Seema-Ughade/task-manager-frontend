@@ -11,6 +11,8 @@ const { Option } = Select;
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]); // State to store users
+  const [clients, setClients] = useState([]); // State to store clients
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentProjectId, setCurrentProjectId] = useState(null);
@@ -23,6 +25,8 @@ const Projects = () => {
   useEffect(() => {
     fetchProjects();
     fetchUsers();
+    fetchClients();
+
   }, [currentPage]);
 
   const fetchProjects = async () => {
@@ -44,6 +48,17 @@ const Projects = () => {
       message.error("Failed to fetch users");
     }
   };
+
+  const fetchClients = async () => {
+    try {
+      const response = await axios.get("https://task-manager-backend-1-3zvs.onrender.com/api/clients");
+      setClients(response.data); // Assuming response.data is an array of clients
+    } catch (error) {
+      console.error("Error fetching clients:", error);
+      message.error("Failed to fetch clients");
+    }
+  };
+ 
 
   // Open the form modal
   const showModal = (project = null) => {
@@ -228,12 +243,18 @@ const Projects = () => {
           </Form.Item>
 
           <Form.Item
-            name="client"
-            label="Client"
-            rules={[{ required: true, message: "Please enter client name" }]}
-          >
-            <Input placeholder="Enter client name" />
-          </Form.Item>
+  name="client"
+  label="Client"
+  rules={[{ required: true, message: "Please select a client" }]}
+>
+  <Select placeholder="Select a client">
+    {clients.map(client => (
+      <Option key={client._id} value={client.name}>
+        {client.name}
+      </Option>
+    ))}
+  </Select>
+</Form.Item>
 
           {/* Color Picker */}
           <Form.Item name="color" label="Color">
@@ -252,9 +273,14 @@ const Projects = () => {
           >
             <Select mode="multiple" placeholder="Select users">
               {users.map((user) => (
-                <Option key={user._id} value={user.username}>{user.username}</Option>
-              ))}
+          <option key={user._id} value={user._id}>{user.name}</option>
+        ))}
             </Select>
+            
+
+
+
+            
           </Form.Item>
 
           {/* Description Field */}

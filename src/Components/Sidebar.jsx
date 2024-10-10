@@ -360,11 +360,11 @@ const linkData = [
     ],
   },
   { key: "calendar", icon: <MdOutlinePendingActions style={{ color: "#722ed1" }} />, label: "Calendar", to: "/calendar", permission: "Manage Calendar View" },
-  { key: "reports", icon: <MdTaskAlt style={{ color: "#eb2f96" }} />, label: "Reports", to: "/reports", permission: "Manage Reports" },
+  // { key: "reports", icon: <MdTaskAlt style={{ color: "#eb2f96" }} />, label: "Reports", to: "/reports", permission: "Manage Reports" },
   { key: "users", icon: <FaUsers style={{ color: "#13c2c2" }} />, label: "Users", to: "/users", permission: "Manage Users" },
   { key: "archived-users", icon: <FaTrashAlt style={{ color: "#f5222d" }} />, label: "Archived Users", to: "/archived-users", permission: "Archived Users" },
   { key: "roles", icon: <MdSettings style={{ color: "#1890ff" }} />, label: "Roles", to: "/roles", permission: "Manage Roles" },
-  { key: "sales", icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, label: "Sales", to: "/sales", permission: "Manage Invoices" },
+  // { key: "sales", icon: <MdOutlinePendingActions style={{ color: "#fa8c16" }} />, label: "Sales", to: "/sales", permission: "Manage Invoices" },
   {
         key: "settings",
         icon: <FaTasks style={{ color: "#eb2f96" }} />,

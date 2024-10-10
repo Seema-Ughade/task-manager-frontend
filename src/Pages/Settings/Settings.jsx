@@ -40,7 +40,7 @@ const Settings = () => {
 useEffect(() => {
   const fetchSettings = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/settings');
+      const response = await axios.get('https://task-manager-backend-1-3zvs.onrender.com/api/settings');
       if (response.data) {
         setFormData(response.data);
       } else {
@@ -77,7 +77,7 @@ useEffect(() => {
       });
   
       // Submit form data to your API endpoint
-      await axios.post('http://localhost:5000/api/settings', data);
+      await axios.post('http://127.0.0.1:5000/api/settings', data);
   
       message.success('Settings saved successfully!');
       setOpen(false); // Close modal on success
